@@ -71,7 +71,7 @@ KennyGreatful.hasTheAppRun()
 #End of text application
 
 def scheduler():
-    KennyGreatful.hasTheAppRun()
+    KennyGreatful.textFunction()
 
 schedule.every(.15).minutes.do(scheduler)
 # schedule.every().hour.do(job)
