@@ -1,4 +1,4 @@
-import datetime,random, os
+import datetime,random, os, schedule, time
 
 from twilio.rest import Client
 from pathlib import Path
@@ -69,3 +69,16 @@ KennyGreatful.hasTheAppRun()
 #KennyGreatful.retrieveResponseList()
 
 #End of text application
+
+def scheduler():
+    KennyGreatful.hasTheAppRun()
+
+schedule.every(.15).minutes.do(scheduler)
+# schedule.every().hour.do(job)
+# schedule.every().day.at("10:30").do(job)
+# schedule.every().monday.do(job)
+# schedule.every().wednesday.at("13:15").do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
