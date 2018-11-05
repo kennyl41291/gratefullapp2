@@ -81,8 +81,8 @@ class Greatfulapp:
 
 ##################################################################################
 KennyGreatful = Greatfulapp()
-KennyGreatful.hasTheAppRun()
-# KennyGreatful.retrieveResponseList()
+# KennyGreatful.hasTheAppRun()
+KennyGreatful.retrieveResponseList()
 
 
 #End of text application
