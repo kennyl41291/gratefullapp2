@@ -106,11 +106,11 @@ class Greatfulapp:
 		if today == lastDay[1]:
 			self.sendEndofMonthGratitudeList()
 		else:
-		print ("It's not the end of the month yet")
-	print ('Testing the today function ' + str(today))
-	print ('Testing the month function ' + str(month))
-	print ('Testing the lastDay function (first day, last day) ' + str(lastDay))
-	print('Timestamp: {:%Y-%b-%d %H:%M:%S}'.format(datetime.datetime.now()))
+			print ("It's not the end of the month yet")
+		print ('Testing the today function ' + str(today))
+		print ('Testing the month function ' + str(month))
+		print ('Testing the lastDay function (first day, last day) ' + str(lastDay))
+		print('Timestamp: {:%Y-%b-%d %H:%M:%S}'.format(datetime.datetime.now()))
 
 	def sendEndofMonthGratitudeList (self):
 
