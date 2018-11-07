@@ -11,6 +11,7 @@ from email import encoders
 
 class Greatfulapp:
 
+	# This function is pretty much useless. It only initiates the textFunction(). Originally built it to provide a log function and track if the app was ran locally. Oh well.
 	def hasTheAppRun(self):
 		my_file = Path("log.txt")
 		if my_file.is_file():
@@ -25,6 +26,7 @@ class Greatfulapp:
 					with open('log.txt','a') as fappend:
 							fappend.write("\n" + todays_date)
 					print ('Sending a text now!')
+					# Running the textfunction here
 					self.textFunction()
 					print ('Sent!')
 					os.system("log.txt")
@@ -49,6 +51,7 @@ class Greatfulapp:
 		  to="+13475069537",
 		  from_="+13479346820",
 		  body="\n----------------\n" + random.choice(quotes) + "\n----------------\n" +"Can you please tell me what are the 3 things you are greatful about?")
+		self.endofMonthReport()
 
 	def retrieveResponseList (self):
 		# Your Account Sid and Auth Token from twilio.com/console
@@ -79,9 +82,9 @@ class Greatfulapp:
 		txtMessages = txtMessages[3:]
 		formattedTxtMessages = '\n'.join(txtMessages)
 
-		print('The list of things you have been grateful about')
-		print('------------------------------------')
-		# print(*txtMessages, sep = "\n")
+		# print('The list of things you have been grateful about')
+		# print('------------------------------------')
+
 		# print (rawMessages)
 		# print (txtMessages)
 		# print (debuggMessageLog)
@@ -104,13 +107,16 @@ class Greatfulapp:
 
 		lastDay = calendar.monthrange(year,month)
 		if today == lastDay[1]:
+			print("Today is the day you will get the monthly gratitude list! See how greatefull you have been!")
 			self.sendEndofMonthGratitudeList()
 		else:
-			print ("It's not the end of the month yet")
-		print ('Testing the today function ' + str(today))
-		print ('Testing the month function ' + str(month))
-		print ('Testing the lastDay function (first day, last day) ' + str(lastDay))
-		print('Timestamp: {:%Y-%b-%d %H:%M:%S}'.format(datetime.datetime.now()))
+			print ("It's not the end of the month yet. The end of the month is on: " + str(month) + "/" + str(lastDay[1]))
+
+		# The below is some test to see what time does Heroku displays
+		# print ('Testing the today function ' + str(today))
+		# print ('Testing the month function ' + str(month))
+		# print ('Testing the lastDay function (first day, last day) ' + str(lastDay))
+		# print('Timestamp: {:%Y-%b-%d %H:%M:%S}'.format(datetime.datetime.now()))
 
 	def sendEndofMonthGratitudeList (self):
 
@@ -133,7 +139,7 @@ class Greatfulapp:
 		msg['To'] = email_send
 		msg['Subject'] = subject
 
-		body = str(formattedTxtMessages)
+		body = 'The below is a summary of how grateful you have been this month. Enjoy! \n\n' + str(formattedTxtMessages)
 		msg.attach(MIMEText(body,'plain'))
 
 		text = msg.as_string()
@@ -149,9 +155,9 @@ class Greatfulapp:
 
 ##################################################################################
 KennyGreatful = Greatfulapp()
-# KennyGreatful.hasTheAppRun()
+KennyGreatful.hasTheAppRun()
 # KennyGreatful.retrieveResponseList()
 # KennyGreatful.sendEndofMonthGratitudeList()
-KennyGreatful.endofMonthReport()
+# KennyGreatful.endofMonthReport()
 
 #End of text application
