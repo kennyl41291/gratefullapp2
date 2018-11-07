@@ -1,7 +1,13 @@
-import datetime,random, os, schedule, time
+import datetime,random, os, schedule, time, calendar, smtplib
 
 from twilio.rest import Client
 from pathlib import Path
+from datetime import date
+
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
 class Greatfulapp:
 
@@ -69,20 +75,81 @@ class Greatfulapp:
 		txtMessages = preRawMessages.split(". ")
 		txtMessages.reverse()
 
-		# Clearing up some 
+		# Clearing up some text and print it nicely
 		txtMessages = txtMessages[3:]
+		formattedTxtMessages = '\n'.join(txtMessages)
 
-		print('The list of things you have been greatful about')
+		print('The list of things you have been grateful about')
 		print('------------------------------------')
-		print(*txtMessages, sep = "\n")
+		# print(*txtMessages, sep = "\n")
 		# print (rawMessages)
 		# print (txtMessages)
+		# print (debuggMessageLog)
+		# print (formattedTxtMessages)
+
+		return (formattedTxtMessages)
+
+	def endofMonthReport (self):
+
+		#Converting todays date and month into a list
+		today = date.today().day
+		month = date.today().month
+		year = date.today().year
+		dateList=[]
+		dateList.append(today)
+		dateList.append(month)
+		dateList.append(year)
+
+		# Obataining the [firstd day of the month , last day of the month] to send the end of month report
+
+		lastDay = calendar.monthrange(year,month)
+		if today == lastDay[1]:
+			self.sendEndofMonthGratitudeList()
+		else:
+			print ("It's not the end of the month yet")
+		print ('Testing the today function ' + str(today))
+		print ('Testing the lastDay function ' + str(lastDay))
+
+	def sendEndofMonthGratitudeList (self):
+
+		# Retrieving the list of text messages 
+		formattedTxtMessages = self.retrieveResponseList()
+
+		# Restating the month and year
+		month = date.today().month
+		year = date.today().year
+
+		# Email code...
+		email_user = 'instatesting99@gmail.com'
+		email_password = '19585723'
+		email_send = 'shivibambi@gmail.com'
+
+		subject = str(month) + '/' + str(year) + ' | Gratitude List'
+
+		msg = MIMEMultipart()
+		msg['From'] = email_user
+		msg['To'] = email_send
+		msg['Subject'] = subject
+
+		body = str(formattedTxtMessages)
+		msg.attach(MIMEText(body,'plain'))
+
+		text = msg.as_string()
+		server = smtplib.SMTP('smtp.gmail.com',587)
+		server.starttls()
+		server.login(email_user,email_password)
+
+		server.sendmail(email_user,email_send,text)
+		server.quit()
+		# End of email code...
+
 
 
 ##################################################################################
 KennyGreatful = Greatfulapp()
-KennyGreatful.hasTheAppRun()
+# KennyGreatful.hasTheAppRun()
 # KennyGreatful.retrieveResponseList()
-
+# KennyGreatful.sendEndofMonthGratitudeList()
+KennyGreatful.endofMonthReport()
 
 #End of text application
